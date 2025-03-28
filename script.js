@@ -1,8 +1,9 @@
-// Import the functions you need from the SDKs you need
+// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
 
-// Your Firebase configuration
+// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyC2F3yKtcZU-yKt3w9lA0jRkRGbM8aWgw",
     authDomain: "creela-world.firebaseapp.com",
@@ -16,8 +17,27 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const database = getDatabase(app);
 
-// Function to handle login
+// Sign-up function
+window.signUp = function() {
+    let email = document.getElementById("signup-email").value;
+    let password = document.getElementById("signup-password").value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            let user = userCredential.user;
+            return set(ref(database, "users/" + user.uid), { role: "user" });
+        })
+        .then(() => {
+            document.getElementById("message").innerText = "Sign-up successful!";
+        })
+        .catch((error) => {
+            document.getElementById("message").innerText = "Sign-up failed: " + error.message;
+        });
+};
+
+// Login function
 window.login = function() {
     let email = document.getElementById("login-email").value;
     let password = document.getElementById("login-password").value;
@@ -25,24 +45,8 @@ window.login = function() {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             document.getElementById("message").innerText = "Login successful!";
-            console.log("User logged in:", userCredential.user);
         })
         .catch((error) => {
             document.getElementById("message").innerText = "Login failed: " + error.message;
-        });
-};
-
-// Function to handle sign up
-window.signUp = function() {
-    let email = document.getElementById("signup-email").value;
-    let password = document.getElementById("signup-password").value;
-
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            document.getElementById("message").innerText = "Sign-up successful!";
-            console.log("User signed up:", userCredential.user);
-        })
-        .catch((error) => {
-            document.getElementById("message").innerText = "Sign-up failed: " + error.message;
         });
 };
