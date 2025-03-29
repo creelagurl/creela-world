@@ -1,8 +1,3 @@
-// Import Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
-
 // Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyC2F3yKtcZU-yKt3w9lA0jRkRGbM8aWgw",
@@ -15,19 +10,19 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const database = getDatabase(app);
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const database = firebase.database();
 
 // Sign-up function
 window.signUp = function() {
     let email = document.getElementById("signup-email").value;
     let password = document.getElementById("signup-password").value;
 
-    createUserWithEmailAndPassword(auth, email, password)
+    auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
             let user = userCredential.user;
-            return set(ref(database, "users/" + user.uid), { role: "user" });
+            return database.ref("users/" + user.uid).set({ role: "user" });
         })
         .then(() => {
             document.getElementById("message").innerText = "Sign-up successful!";
@@ -42,7 +37,7 @@ window.login = function() {
     let email = document.getElementById("login-email").value;
     let password = document.getElementById("login-password").value;
 
-    signInWithEmailAndPassword(auth, email, password)
+    auth.signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
             document.getElementById("message").innerText = "Login successful!";
         })
