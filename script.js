@@ -1,4 +1,4 @@
-// Firebase configuration
+// ✅ Ensure Firebase is properly initialized
 const firebaseConfig = {
   apiKey: "AIzaSyC2F3yKtcZU-yKt3wq9lA0jRkRGbM8aWgw",
   authDomain: "creela-world.firebaseapp.com",
@@ -10,13 +10,13 @@ const firebaseConfig = {
   measurementId: "G-TED480L738"
 };
 
-// Initialize Firebase using the global `firebase` object
+// ✅ Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const database = firebase.database();
 
-// Sign-up function
-window.signUp = function() {
+// ✅ Attach functions to the `window` object (Make them global)
+window.signUp = function () {
     let email = document.getElementById("signup-email").value;
     let password = document.getElementById("signup-password").value;
 
@@ -33,8 +33,7 @@ window.signUp = function() {
         });
 };
 
-// Login function
-window.login = function() {
+window.login = function () {
     let email = document.getElementById("login-email").value;
     let password = document.getElementById("login-password").value;
 
