@@ -1,12 +1,13 @@
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyC2F3yKtcZU-yKt3w9lA0jRkRGbM8aWgw",
-    authDomain: "creela-world.firebaseapp.com",
-    projectId: "creela-world",
-    storageBucket: "creela-world.appspot.com",
-    messagingSenderId: "390361485063",
-    appId: "1:390361485063:web:fc25cd61a5d002e11cffa2",
-    measurementId: "G-TED480L738"
+  apiKey: "AIzaSyC2F3yKtcZU-yKt3wq9lA0jRkRGbM8aWgw",
+  authDomain: "creela-world.firebaseapp.com",
+  databaseURL: "https://creela-world-default-rtdb.firebaseio.com",
+  projectId: "creela-world",
+  storageBucket: "creela-world.firebasestorage.app",
+  messagingSenderId: "390361485063",
+  appId: "1:390361485063:web:fc25cd61a5d002e11cffa2",
+  measurementId: "G-TED480L738"
 };
 
 // Initialize Firebase
