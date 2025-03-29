@@ -1,10 +1,10 @@
-// ✅ Ensure Firebase is loaded before using it
+// ✅ Ensure Firebase is Loaded Before Using It
 if (typeof firebase === "undefined") {
     console.error("❌ Firebase SDK not loaded! Check script order in HTML.");
 } else {
     console.log("✅ Firebase SDK loaded.");
 
-    // ✅ Firebase configuration
+    // ✅ Firebase Config
     const firebaseConfig = {
         apiKey: "AIzaSyC2F3yKtcZU-yKt3wq9lA0jRkRGbM8aWgw",
         authDomain: "creela-world.firebaseapp.com",
@@ -23,12 +23,12 @@ if (typeof firebase === "undefined") {
 
     console.log("✅ Firebase initialized.");
 
-    // ✅ Sign-up function
-    window.signUp = function () {
-        console.log("🔹 Sign-up button clicked.");
+    // ✅ Define Login as a Global Function
+    window.login = function () {
+        console.log("🔹 Login button clicked.");
 
-        let email = document.getElementById("signup-email").value;
-        let password = document.getElementById("signup-password").value;
+        let email = document.getElementById("login-email").value;
+        let password = document.getElementById("login-password").value;
 
         if (!email || !password) {
             console.warn("⚠️ Email or password is empty.");
@@ -36,46 +36,19 @@ if (typeof firebase === "undefined") {
             return;
         }
 
-        auth.createUserWithEmailAndPassword(email, password)
+        auth.signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
-                console.log("✅ User created:", userCredential.user);
-                let user = userCredential.user;
-                return database.ref("users/" + user.uid).set({ role: "user" });
-            })
-            .then(() => {
-                document.getElementById("message").innerText = "Sign-up successful!";
+                console.log("✅ User logged in:", userCredential.user);
+                document.getElementById("message").innerText = "Login successful!";
+
+                // ✅ Redirect to Dashboard
+                setTimeout(() => {
+                    window.location.href = "dashboard.html"; 
+                }, 1000);
             })
             .catch((error) => {
-                console.error("❌ Sign-up error:", error.message);
-                document.getElementById("message").innerText = "Sign-up failed: " + error.message;
+                console.error("❌ Login error:", error.message);
+                document.getElementById("message").innerText = "Login failed: " + error.message;
             });
     };
-
-// ✅ Login function with redirect
-window.login = function () {
-    console.log("🔹 Login button clicked.");
-
-    let email = document.getElementById("login-email").value;
-    let password = document.getElementById("login-password").value;
-
-    if (!email || !password) {
-        console.warn("⚠️ Email or password is empty.");
-        document.getElementById("message").innerText = "Please fill in all fields.";
-        return;
-    }
-
-    auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            console.log("✅ User logged in:", userCredential.user);
-            document.getElementById("message").innerText = "Login successful!";
-            
-            // ✅ Redirect to dashboard.html after successful login
-            setTimeout(() => {
-                window.location.href = "dashboard.html"; 
-            }, 1000); // 1-second delay for user feedback
-        })
-        .catch((error) => {
-            console.error("❌ Login error:", error.message);
-            document.getElementById("message").innerText = "Login failed: " + error.message;
-        });
-};
+}
