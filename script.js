@@ -10,10 +10,10 @@ const firebaseConfig = {
   measurementId: "G-TED480L738"
 };
 
-// Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig); // Initialize the app
-const auth = firebase.auth(); // Initialize Firebase Auth
-const database = firebase.database(); // Initialize Firebase Database
+// Initialize Firebase using the global `firebase` object
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const database = firebase.database();
 
 // Sign-up function
 window.signUp = function() {
