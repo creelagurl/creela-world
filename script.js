@@ -51,27 +51,31 @@ if (typeof firebase === "undefined") {
             });
     };
 
-    // ✅ Login function
-    window.login = function () {
-        console.log("🔹 Login button clicked.");
+// ✅ Login function with redirect
+window.login = function () {
+    console.log("🔹 Login button clicked.");
 
-        let email = document.getElementById("login-email").value;
-        let password = document.getElementById("login-password").value;
+    let email = document.getElementById("login-email").value;
+    let password = document.getElementById("login-password").value;
 
-        if (!email || !password) {
-            console.warn("⚠️ Email or password is empty.");
-            document.getElementById("message").innerText = "Please fill in all fields.";
-            return;
-        }
+    if (!email || !password) {
+        console.warn("⚠️ Email or password is empty.");
+        document.getElementById("message").innerText = "Please fill in all fields.";
+        return;
+    }
 
-        auth.signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                console.log("✅ User logged in:", userCredential.user);
-                document.getElementById("message").innerText = "Login successful!";
-            })
-            .catch((error) => {
-                console.error("❌ Login error:", error.message);
-                document.getElementById("message").innerText = "Login failed: " + error.message;
-            });
-    };
-}
+    auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            console.log("✅ User logged in:", userCredential.user);
+            document.getElementById("message").innerText = "Login successful!";
+            
+            // ✅ Redirect to dashboard.html after successful login
+            setTimeout(() => {
+                window.location.href = "dashboard.html"; 
+            }, 1000); // 1-second delay for user feedback
+        })
+        .catch((error) => {
+            console.error("❌ Login error:", error.message);
+            document.getElementById("message").innerText = "Login failed: " + error.message;
+        });
+};
